@@ -6,7 +6,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
-namespace Chess;
+namespace Sakklepesek_ZakarArmin;
 
 public class Chessboard
 {

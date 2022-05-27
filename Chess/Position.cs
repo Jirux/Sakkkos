@@ -1,4 +1,4 @@
-﻿namespace Chess;
+﻿namespace Sakklepesek_ZakarArmin;
 
 public class Position
 {

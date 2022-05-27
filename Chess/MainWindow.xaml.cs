@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Chess
+namespace Sakklepesek_ZakarArmin
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

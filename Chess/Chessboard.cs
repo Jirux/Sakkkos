@@ -74,5 +74,48 @@ public class Chessboard
         ClearBoard();
     }
 
-    
+    // alap színezés
+    private void ClearBoard()
+    {
+        bool dark = true;
+        for (int row = 1; row <= 8; row++)
+        {
+            for (int col = 1; col <= 8; col++)
+            {
+                tiles[row][col].Fill = dark ? DARK : LIGHT;
+                dark = !dark;
+            }
+            dark = !dark;
+        }
+        if (CurrentImage != null)
+            _mainWindow.grid.Children.Remove(CurrentImage);
+    }
+
+    private void OnTileClick(object sender, MouseButtonEventArgs e)
+    {
+        // reset
+        ClearBoard();
+        Rectangle tile = (Rectangle)sender;
+        string[] data = tile.Name.Substring(1).Split("_");
+        // kattintott pozicio
+        var pos = new Position(Int32.Parse(data[1]), Int32.Parse(data[0]));
+        _mainWindow.tileLabel.Content = "Kiválasztott mező: " + pos;
+        // kiválasztott bábu képe
+        CurrentImage = CurrentPiece.Image;
+        // -2: korrigálás a kép rossz fillelésére
+        CurrentImage.Margin = new Thickness(pos.ToPixelX(baseX) - 2, pos.toPixelY(baseY), 0, 0);
+        _mainWindow.grid.Children.Add(CurrentImage);
+        // érvényes lépések
+        List<Position> validMoves = MoveCalculator.GetValidMoves(pos, CurrentPiece);
+        validMoves.ForEach(pos =>
+        {
+            var t = tiles[pos.Row][pos.Column];
+            if (t.Fill == DARK)
+                t.Fill = MOVE_DARK;
+            else
+                t.Fill = MOVE_LIGHT;
+        });
+        // lépések kiírása
+        _mainWindow.moveBox.Text = "Lehetséges lépések: " + string.Join(" ", validMoves);
+    }
 }
